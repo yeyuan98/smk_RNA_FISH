@@ -40,8 +40,8 @@ def print_check_run_info(run):
 def sample_convert(inputs, output_dir):
     """
         Given input raw image full paths, convert and write to output_dir.
-    :param inputs: input raw image absolute paths, JSON string
-    :param output_dir: output directory absolute path
+    :param inputs: input raw image absolute paths, list
+    :param output_dir: output directory absolute path, string
     :return: none
     """
     original_names = [os.path.split(inp)[1] for inp in inputs]
