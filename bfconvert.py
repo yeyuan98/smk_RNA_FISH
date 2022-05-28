@@ -9,6 +9,7 @@ import time
 import os
 import sys
 import subprocess
+import json
 
 
 def print_current_time(message=None):
@@ -39,10 +40,8 @@ def print_check_run_info(run):
 def sample_convert(inputs, output_dir):
     """
         Given input raw image full paths, convert and write to output_dir.
-        snakemake config params:
-            tools/converter, threads_per_sample/sample_convert, mem_mb_per_sample/sample_convert
-    :param inputs: input raw image full paths
-    :param output_dir: output directory
+    :param inputs: input raw image absolute paths, JSON string
+    :param output_dir: output directory absolute path
     :return: none
     """
     original_names = [os.path.split(inp)[1] for inp in inputs]
@@ -60,8 +59,23 @@ def sample_convert(inputs, output_dir):
 
 
 if __name__ == "__main__":
+    #   First, parse parameters
     arg_total = len(sys.argv)
     if len(sys.argv) != 2:
         raise ValueError("USAGE: bfconvert.py <inputs_list> <output_directory>")
+    try:
+        inputs = json.loads(sys.argv[0])
+    except:
+        raise ValueError("<inputs_list> must be JSON string.")
+    output_dir = sys.argv[1]
+    #   Next, check existence of claimed inputs and output directory
+    inputs_check = [os.path.exists(i) for i in inputs]
+    outdir_check = os.path.exists(output_dir)
+    if outdir_check is False:
+        raise ValueError("Output directory does not exist")
+    if not all(inputs_check):
+        raise ValueError("Not all inputs exist")
+    #   Next, call the real work function
+    sample_convert(inputs, output_dir)
 else:
-    raise ValueError("Bfconvert wrapper script must be called from shell directly.")
+    raise ValueError("bfconvert wrapper script must be called from shell directly.")
