@@ -48,7 +48,7 @@ def sample_convert(inputs, output_dir):
     output_names = [os.path.splitext(original)[0] for original in original_names]
     output_names = [outname + ".ome.tif" for outname in output_names]
     output_paths = [os.path.join(output_dir, outname) for outname in output_names]
-    os.mkdir(output_dir)
+    os.makedirs(output_dir, exist_ok=True)
     for i in range(len(inputs)):
         in_path = inputs[i]
         out_path = output_paths[i]
@@ -70,7 +70,7 @@ if __name__ == "__main__":
         inputs = inputs.strip("'")
         inputs = json.loads(inputs)
     except:
-        raise ValueError("<inputs_list> must be JSON string; or, did you escape double quotes?")
+        raise ValueError("<inputs_list> must be JSON string; also, do NOT escape quotes in string.")
     output_dir = sys.argv[2]
     #   Next, check existence of claimed inputs and output directory
     inputs_check = [os.path.exists(i) for i in inputs]
