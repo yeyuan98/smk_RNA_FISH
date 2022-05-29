@@ -61,13 +61,13 @@ def sample_convert(inputs, output_dir):
 if __name__ == "__main__":
     #   First, parse parameters
     arg_total = len(sys.argv)
-    if len(sys.argv) != 2:
+    if len(sys.argv) != 3:
         raise ValueError("USAGE: bfconvert.py <inputs_list> <output_directory>")
     try:
-        inputs = json.loads(sys.argv[0])
+        inputs = json.loads(sys.argv[1])
     except:
         raise ValueError("<inputs_list> must be JSON string.")
-    output_dir = sys.argv[1]
+    output_dir = sys.argv[2]
     #   Next, check existence of claimed inputs and output directory
     inputs_check = [os.path.exists(i) for i in inputs]
     outdir_check = os.path.exists(output_dir)
