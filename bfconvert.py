@@ -64,9 +64,13 @@ if __name__ == "__main__":
     if len(sys.argv) != 3:
         raise ValueError("USAGE: bfconvert.py <inputs_list> <output_directory>")
     try:
-        inputs = json.loads(sys.argv[1])
+        inputs = sys.argv[1]
+        #   Remove trailing quotes to make valid JSON string.
+        inputs = inputs.strip('"')
+        inputs = inputs.strip("'")
+        inputs = json.loads(inputs)
     except:
-        raise ValueError("<inputs_list> must be JSON string.")
+        raise ValueError("<inputs_list> must be JSON string; or, did you escape double quotes?")
     output_dir = sys.argv[2]
     #   Next, check existence of claimed inputs and output directory
     inputs_check = [os.path.exists(i) for i in inputs]
