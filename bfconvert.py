@@ -76,7 +76,8 @@ if __name__ == "__main__":
     inputs_check = [os.path.exists(i) for i in inputs]
     outdir_check = os.path.exists(output_dir)
     if outdir_check is False:
-        raise ValueError("Output directory does not exist")
+        print_current_time("INFO: Output directory does not exist, created.")
+        os.makedirs(output_dir, exist_ok=True)
     if not all(inputs_check):
         raise ValueError("Not all inputs exist")
     #   Next, call the real work function
