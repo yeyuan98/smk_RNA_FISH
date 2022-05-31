@@ -12,6 +12,4 @@ fi
 
 shift 2
 
-echo "$@"
-
-#micromamba create "$@"
+micromamba create "$@"
