@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# A wrapper script for mapping (mamba env create {...} -> micromamba create {...})
+
+USAGE="Usage: $0 env create ..."
+
+if [ "$#" == "0" ]
+then
+  echo "$USAGE"
+  exit 1
+fi
+
+if [ "$2" != env ] || [ "$3" != create ]
+then
+  echo "$USAGE"
+  exit 1
+fi
+
+shift 3
+
+micromamba create "$@"
