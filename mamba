@@ -4,13 +4,7 @@
 
 USAGE="Usage: $0 env create ..."
 
-if [ "$#" == "0" ]
-then
-  echo "$USAGE"
-  exit 1
-fi
-
-if [ "$2" != env ] || [ "$3" != create ]
+if [ $# -lt 4 ] || [ "$1" != env ] || [ "$2" != create ]
 then
   echo "$USAGE"
   exit 1
